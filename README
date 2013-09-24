@@ -1,6 +1,10 @@
 This is a multi-threaded CPU miner for Litecoin and Bitcoin,
 fork of Jeff Garzik's reference cpuminer.
 
+Added Blake hashing based on C from the spblib libary modified for extra speed. So for performance gains, 
+use -march for specific CPU types like core2 corei7 a safe flag is -march=native -O2 -pipe 
+
+
 License: GPLv2.  See COPYING for details.
 
 Downloads:  https://sourceforge.net/projects/cpuminer/files/

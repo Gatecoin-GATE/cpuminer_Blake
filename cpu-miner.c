@@ -103,11 +103,13 @@ struct workio_cmd {
 enum sha256_algos {
 	ALGO_SCRYPT,		/* scrypt(1024,1,1) */
 	ALGO_SHA256D,		/* SHA-256d */
+	ALGO_BLAKE,             /* Blake256 (8/10) */
 };
 
 static const char *algo_names[] = {
 	[ALGO_SCRYPT]		= "scrypt",
 	[ALGO_SHA256D]		= "sha256d",
+	[ALGO_BLAKE]		= "blake",
 };
 
 bool opt_debug = false;
@@ -167,6 +169,7 @@ Options:\n\
   -a, --algo=ALGO       specify the algorithm to use\n\
                           scrypt    scrypt(1024, 1, 1) (default)\n\
                           sha256d   SHA-256d\n\
+                          blake     Blake256 (8/10) \n\
   -o, --url=URL         URL of mining server (default: " DEF_RPC_URL ")\n\
   -O, --userpass=U:P    username:password pair for mining server\n\
   -u, --user=USERNAME   username for mining server\n\
@@ -762,7 +765,10 @@ static void *miner_thread(void *userdata)
 			rc = scanhash_sha256d(thr_id, work.data, work.target,
 			                      max_nonce, &hashes_done);
 			break;
-
+		case ALGO_BLAKE:
+			rc = scanhash_blake(thr_id, work.data, work.target,
+			                      max_nonce, &hashes_done);
+			break;
 		default:
 			/* should never happen */
 			goto out;
@@ -1275,6 +1281,11 @@ int main(int argc, char *argv[])
 	/* parse command line */
 	parse_cmdline(argc, argv);
 
+	if (opt_algo==ALGO_BLAKE)
+	{
+		init_blakehash_contexts();
+	}	
+	
 	pthread_mutex_init(&applog_lock, NULL);
 	pthread_mutex_init(&stats_lock, NULL);
 	pthread_mutex_init(&g_work_lock, NULL);

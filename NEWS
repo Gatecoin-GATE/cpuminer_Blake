@@ -1,3 +1,7 @@
+Version 2.3.2-b - Sep 24, 2013
+
+- Added support for Blake hashing algorithm 
+
 Version 2.3.2 - Jul 10, 2013
 
 - Add optimizations for AVX2-capable x86-64 processors
