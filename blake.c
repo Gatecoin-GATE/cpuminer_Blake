@@ -28,6 +28,7 @@
  * ===========================(LICENSE END)=============================
  *
  * @author   Thomas Pornin <thomas.pornin@cryptolog.com>
+ * Modified for speed by BlueDragon747
  */
 
 #include <stddef.h>
