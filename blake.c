@@ -28,7 +28,8 @@
  * ===========================(LICENSE END)=============================
  *
  * @author   Thomas Pornin <thomas.pornin@cryptolog.com>
- * Modified for speed by BlueDragon747
+ *
+ * Modified for more speed by BlueDragon747 for the Blakecoin project
  */
 
 #include <stddef.h>
@@ -69,7 +70,7 @@ static const sph_u32 IV256[8] = {
 
 #if SPH_COMPACT_BLAKE_32
 
-static const unsigned sigma[10][16] = {
+static const unsigned sigma[14][16] = {
 	{  0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14, 15 },
 	{ 14, 10,  4,  8,  9, 15, 13,  6,  1, 12,  0,  2, 11,  7,  5,  3 },
 	{ 11,  8, 12,  0,  5,  2, 15, 13, 10, 14,  3,  6,  7,  1,  9,  4 },
@@ -79,7 +80,11 @@ static const unsigned sigma[10][16] = {
 	{ 12,  5,  1, 15, 14, 13,  4, 10,  0,  7,  6,  3,  9,  2,  8, 11 },
 	{ 13, 11,  7, 14, 12,  1,  3,  9,  5,  0, 15,  4,  8,  6,  2, 10 },
 	{  6, 15, 14,  9, 11,  3,  0,  8, 12,  2, 13,  7,  1,  4, 10,  5 },
-	{ 10,  2,  8,  4,  7,  6,  1,  5, 15, 11,  9, 14,  3, 12, 13,  0 }
+	{ 10,  2,  8,  4,  7,  6,  1,  5, 15, 11,  9, 14,  3, 12, 13,  0 },
+	{  0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14, 15 },
+	{ 14, 10,  4,  8,  9, 15, 13,  6,  1, 12,  0,  2, 11,  7,  5,  3 },
+	{ 11,  8, 12,  0,  5,  2, 15, 13, 10, 14,  3,  6,  7,  1,  9,  4 },
+	{  7,  9,  3,  1, 13, 12, 11, 14,  2,  6,  5, 10,  4,  0, 15,  8 }
 };
 
 /*
@@ -489,12 +494,6 @@ static const sph_u32 CS[16] = {
 		ROUND_S(5); \
 		ROUND_S(6); \
 		ROUND_S(7); \
-		ROUND_S(8); \
-		ROUND_S(9); \
-		ROUND_S(0); \
-		ROUND_S(1); \
-		ROUND_S(2); \
-		ROUND_S(3); \
 		H0 ^= S0 ^ V0 ^ V8; \
 		H1 ^= S1 ^ V1 ^ V9; \
 		H2 ^= S2 ^ V2 ^ VA; \
