@@ -5,13 +5,11 @@ forked of Jeff Garzik's reference cpuminer with additions by ArtForz and Pooler.
 
 Added Blake hashing based on C from the spblib libary modified for extra speed. 
 So for performance gains, use -march for specific CPU types like core2 corei7 
-a safe flag is  ./configure CFLAGS="-march=native -O1 -pipe"
 
+A safe flag is:                ./configure CFLAGS="-march=native -O1 -pipe"
+A fast flag on Intel core2 is: ./configure CFLAGS="-march=core2 -O1 -pipe"
 
 License: GPLv2.  See COPYING for details.
-
-Downloads:  https://sourceforge.net/projects/cpuminer/files/
-Git tree:   https://github.com/pooler/cpuminer
 
 Dependencies:
 	libcurl			http://curl.haxx.se/libcurl/
@@ -21,7 +19,7 @@ Dependencies:
 Basic *nix build instructions:
 	./autogen.sh	# only needed if building from git repo
 	./nomacro.pl	# only needed if building on Mac OS X or with Clang
-	./configure CFLAGS="-O3"
+	./configure CFLAGS="-O1"
 	make
 
 Notes for AIX users:
@@ -38,7 +36,7 @@ Basic Windows build instructions, using MinGW:
 		* Make sure you have curl-config in MinGW\bin
 	In the MSYS shell, run:
 		./autogen.sh	# only needed if building from git repo
-		LIBCURL="-lcurldll" ./configure CFLAGS="-O3"
+		LIBCURL="-lcurldll" ./configure CFLAGS="-O1"
 		make
 
 Architecture-specific notes:
@@ -70,6 +68,6 @@ If no protocol is specified, the proxy is assumed to be a HTTP proxy.
 When the --proxy option is not used, the program honors the http_proxy
 and all_proxy environment variables.
 
-Also many issues and FAQs are covered in the forum thread
-dedicated to this program,
-	https://bitcointalk.org/index.php?topic=55038.0
+Basic wallet solo mining command example: 
+
+minerd -o 127.0.0.1:8772 -O username:password -a blake
