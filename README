@@ -1,5 +1,7 @@
-This is a multi-threaded CPU miner for Litecoin and Bitcoin,
-fork of Jeff Garzik's reference cpuminer.
+This is a multi-threaded CPU miner for Litecoin, Bitcoin and Blakecoin,
+forked of Jeff Garzik's reference cpuminer with additions by ArtForz and Pooler.
+
+2013 additions by BlueDragon747 for Blakecoin.
 
 Added Blake hashing based on C from the spblib libary modified for extra speed. 
 So for performance gains, use -march for specific CPU types like core2 corei7 
