@@ -6,12 +6,17 @@ Additions by BlueDragon747 for Blakecoin.
 Added Blake hashing based on C from the spblib libary modified for extra speed. 
 So for performance gains, use -march for specific CPU types like core2 corei7 
 
+With the "build.sh" file you can build linux binaries for modern processors. Or,
+with the file "build_core2.sh" you can build for old Core 2 Duo procesors.
+
 A safe flag is:                ./configure CFLAGS="-march=native -O1 -pipe"
 A fast flag on Intel core2 is: ./configure CFLAGS="-march=core2 -O1 -pipe"
 
 License: GPLv2.  See COPYING for details.
 
 Dependencies:
+	libcurl4-openssl-dev libjansson-dev build-essential automake autoconf pkg-config
+	
 	libcurl			http://curl.haxx.se/libcurl/
 	jansson			http://www.digip.org/jansson/
 		(jansson is included in-tree)
