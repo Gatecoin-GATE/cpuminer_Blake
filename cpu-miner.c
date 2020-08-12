@@ -316,12 +316,12 @@ static void share_result(int result, const char *reason)
 	pthread_mutex_unlock(&stats_lock);
 	
 	sprintf(s, hashrate >= 1e6 ? "%.0f" : "%.2f", 1e-3 * hashrate);
-	applog(LOG_INFO, "accepted: %lu/%lu (%.2f%%), %s khash/s %s",
+	applog(LOG_INFO, "\033[0;32mAccepted: %lu/%lu (%.2f%%), %s kHash/s %s \033[0m;",
 		   accepted_count,
 		   accepted_count + rejected_count,
 		   100. * accepted_count / (accepted_count + rejected_count),
 		   s,
-		   result ? "(yay!!!)" : "(booooo)");
+		   result ? "\033[0;32m(yay!!!) \033[0m;" : "\033[0;31m(booooo) \033[0m;");
 
 	if (opt_debug && reason)
 		applog(LOG_DEBUG, "DEBUG: reject reason: %s", reason);
@@ -786,8 +786,8 @@ static void *miner_thread(void *userdata)
 		if (!opt_quiet) {
 			sprintf(s, thr_hashrates[thr_id] >= 1e6 ? "%.0f" : "%.2f",
 				1e-3 * thr_hashrates[thr_id]);
-			applog(LOG_INFO, "thread %d: %lu hashes, %s khash/s",
-				thr_id, hashes_done, s);
+			applog(LOG_INFO, "Thread #%d: %s kHash/s",
+				thr_id, s);
 		}
 		if (opt_benchmark && thr_id == opt_n_threads - 1) {
 			double hashrate = 0.;
@@ -979,7 +979,7 @@ static void *stratum_thread(void *userdata)
 			time(&g_work_time);
 			pthread_mutex_unlock(&g_work_lock);
 			if (stratum.job.clean) {
-				applog(LOG_INFO, "Stratum detected new block");
+				applog(LOG_INFO, "\033[0;36mStratum detected new block\033[0m");
 				restart_threads();
 			}
 		}
@@ -1422,8 +1422,15 @@ int main(int argc, char *argv[])
 		}
 	}
 
-	applog(LOG_INFO, "%d miner threads started, "
-		"using '%s' algorithm.",
+	#ifdef __unix__  
+		system("clear");
+	#elif defined(_WIN32) || defined(WIN32)
+		system("cls");
+	#endif
+
+	applog(LOG_INFO, "Gatecoin cpuminer, forked from BlueDragon747");
+	applog(LOG_INFO, "\033[0;33m%d miner threads started, "
+		"using '%s' algorithm.\033[0m",
 		opt_n_threads,
 		algo_names[opt_algo]);
 
